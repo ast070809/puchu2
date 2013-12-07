@@ -1,0 +1,23 @@
+-provide(:title, 'Sign up')
+
+.row
+	.span6.offset8
+		%h3
+			Sign up
+.row
+	.span6.offset6
+		=form_for(@user) do |f|
+			.input-control.text
+				= f.label :name
+				= f.text_field :name
+			.input-control.text
+				= f.label :email
+				= f.email_field :email, type: 'text'
+			.input-control.password
+				= f.label :password
+				= f.password_field :password, type: 'password'
+			.input-control.password
+				= f.label :password_confirmation
+				= f.password_field :password_confirmation, type: 'password'
+			.input-control.submit
+				=f.submit 'Create my account'
