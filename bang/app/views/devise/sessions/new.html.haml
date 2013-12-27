@@ -1,0 +1,60 @@
+-provide(:title, 'Login')
+/ /header
+/ === End Header ===
+/ === Breadcrumbs ===
+.breadcrumbs.margin-bottom-40
+  .container
+    %h1.pull-left Login
+    %ul.pull-right.breadcrumb
+      %li
+        %a{href: "index.html"} Home
+      %li
+        %a{href: ""} Pages
+      %li.active Login
+  / /container
+/ /breadcrumbs
+/ === End Breadcrumbs ===
+/ === Content Part ===
+.container
+  .row
+    .col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3
+      %h2 Sign in
+      
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "reg-page"}) do |f|
+        .reg-header
+          %h2 Login to your account  
+        .input-group.margin-bottom-20
+          %span.input-group-addon
+            %i.icon-user
+          = f.email_field :email, :autofocus => true, class: 'form-control', type: 'text'
+        .input-group.margin-bottom-20
+          %span.input-group-addon
+            %i.icon-lock
+          = f.password_field :password, class: 'form-control', type: 'password'
+        .row
+          .col-md-6
+            - if devise_mapping.rememberable?
+              %div
+                = f.check_box :remember_me, class: 'checkbox'
+                Remember me
+            
+          .col-md-6
+            %div
+              = f.submit "Sign in", class: 'btn-u pull-right', type: 'submit'
+        = render "devise/shared/links"
+        %hr/
+        %h4 Forget your Password ?
+        %p
+          no worries,
+          %a.color-green{href: "#"} click here
+          to reset your password.
+  / /row
+/ /container
+/ === End Content Part ===
+
+:javascript
+  jQuery(document).ready(function() {
+      App.init();
+  });
+/[if lt IE 9]
+  <script src="assets/plugins/respond.js"></script>

@@ -1,0 +1,47 @@
+=render 'layouts/header'
+.breadcrumbs.margin-bottom-40
+  .container
+    %h1.pull-left
+      Registration
+.container
+  .row
+    .col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: {class: "reg-page"}) do |f|
+        .reg-header
+          %h2 Register a new account
+          %p
+            Already Signed Up? Click
+            %a.color-green{href: "page_login.html"} Sign In
+            to login your account.
+        = devise_error_messages!
+        .row
+          .col-sm-6
+            =f.label :first_name
+            %span.color-red *
+            =f.text_field :first_name, class: "form-control margin-bottom-20",type:"text"
+          .col-sm-6
+            =f.label :last_name
+            %span.color-red *
+            =f.text_field :last_name, class: "form-control margin-bottom-20",type:"text"
+        %div
+          = f.label :email
+          %span.color-red *
+          = f.email_field :email, :autofocus => true, class: "form-control margin-bottom-20",type:"text"
+        .row
+          .col-sm-6
+            = f.label :password
+            %span.color-red *
+            = f.password_field :password,class: "form-control margin-bottom-20",type:"password"
+          .col-sm-6
+            = f.label :password_confirmation
+            %span.color-red *
+            = f.password_field :password_confirmation,class: "form-control margin-bottom-20"
+        .row
+          .col-lg-6
+            %label.checkbox
+            %input{type: "checkbox"}/
+            I read
+            %a.color-green{href: "page_terms.html"} Terms and Conditions
+          .col-lg-6.text-right
+            = f.submit "Sign up", class: "btn-u", type: "submit"
+      = render "devise/shared/links"

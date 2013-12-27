@@ -1,0 +1,20 @@
+-provide(:title, 'Sign in')
+.row
+	.span6.offset6.center
+		%h3
+			Sign in
+.row
+	.span6.offset6
+		= form_for(:session, url: sessions_path) do |f|
+			.input-control.text
+				=f.label :email
+				=f.text_field :email
+			.input-control.password
+				=f.label :password
+				=f.password_field :password
+			.input-control.submit
+				=f.submit "Sign in"
+		.row
+			%p
+				New User?
+				=link_to "Sign up now!", signup_path

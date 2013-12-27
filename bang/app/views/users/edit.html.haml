@@ -1,0 +1,276 @@
+
+.breadcrumbs.margin-bottom-40
+  .container
+    %h1.pull-left
+      Edit
+.container
+  .row
+    / Begin Sidebar Menu
+    
+    / End Sidebar Menu
+    / Begin Content
+    .row.tab-v3
+      .col-md-3
+        %ul.nav.nav-pills.nav-stacked
+          %li.active
+            %a{"data-toggle" => "tab", href: "#basic_info"}
+              %i.icon-home
+              Basic Information
+          %li
+            %a{"data-toggle" => "tab", href: "#edu"}
+              %i.icon-cloud
+              Education
+          %li
+            %a{"data-toggle" => "tab", href: "#messages-2"}
+              %i.icon-comments
+              Availability
+          %li
+            %a{"data-toggle" => "tab", href: "#settings-2"}
+              %i.icon-gear
+              Settings
+      .col-md-9
+        .tab-content
+          .tab-pane.active{id:'basic_info'}
+            .panel.panel-green.margin-bottom-40
+              .panel-heading
+                %h3.panel-title
+                  %i.icon-tasks
+                  Information
+              .panel-body
+                %table.table
+                  %tbody
+                    %tr
+                      %td
+                        First Name
+                      %td
+                        =current_user.first_name
+                    %tr
+                      %td
+                        Registered Email
+                      %td
+                        =current_user.email
+                    %tr
+                      %td
+                        Current Address
+                      %td
+                        -if @c
+                          =@current_address.street_address
+                          ,
+                          %br
+                          =@current_address.city
+                          ,
+                          %br
+                          %strong
+                            =@current_address.state
+                          %br
+                          Pincode:
+                          &nbsp
+                          =@current_address.pincode
+                          %br
+                          %span.badge.badge-blue.click_pointer{id: 'current_upd'}
+                            Update
+                        -else
+                          %button.btn-u.btn-u-blue.btn-xs
+                            Enter Current Address
+                    %tr{id: "form_cur_ad", style: "display: none;"}
+                      %td
+                      %td
+                        %table
+                          =form_for @current_address do |f|
+                            %tr
+                              %td
+                                =f.label :street_address
+                                =f.text_area :street_address
+                            %tr
+                              %td
+                                =f.label :city
+                                =f.text_field :city
+                            %tr
+                              %td
+                                =f.label :state
+                                =f.text_field :state
+                            %tr
+                              %td
+                                =f.label :pincode
+                                =f.text_field :pincode
+                            %tr
+                              %td
+                                =f.submit 'Submit'
+                    %tr
+                      %td
+                        Permanent Address
+                      %td
+                        -if @p
+                          =@permanent_address.street_address
+                          ,
+                          %br
+                          =@permanent_address.city
+                          ,
+                          %br
+                          %strong
+                            =@permanent_address.state
+                          %br
+                          Pincode:
+                          &nbsp
+                          =@permanent_address.pincode
+                          %br
+                          %span.badge.badge-blue.click_pointer{id: 'perm_upd'}
+                            Update
+                        -else
+                          %button.btn-u.btn-u-blue.btn-xs{id: 'enter_perm'}
+                            Enter Permanent Address
+                          
+                        %tr{id: "form_cur_ad", style: "display: none;"}
+                    %tr{id: 'form_perm_ad', style:"display:none;"}
+                      %td
+                      %td
+                        %table
+                          =form_for @permanent_address do |f|
+                            %tr
+                              %td
+                                =f.label :street_address
+                                =f.text_area :street_address
+                            %tr
+                              %td
+                                =f.label :city
+                                =f.text_field :city
+                            %tr
+                              %td
+                                =f.label :state
+                                =f.text_field :state
+                            %tr
+                              %td
+                                =f.label :pincode
+                                =f.text_field :pincode
+                            %tr
+                              %td
+                                =f.submit 'Submit'
+          .tab-pane{id: 'edu'}
+            #accordion-1.panel-group.acc-v1
+              .panel.panel-default
+                .panel-heading
+                  %h4.panel-title
+                    %a.accordion-toggle{"data-parent" => "#accordion-1", "data-toggle" => "collapse", href: "#collapse-One"}
+                      Basic or Graduation
+                #collapse-One.panel-collapse.collapse.in
+                  .panel-body
+                    .row
+                      .col-md-12
+                        session chk
+                        =session[:chk]
+                        = form_tag grad_edu_create_path, method: :post do
+                          = hidden_field_tag :grad_deg_type, value: 'graduation'
+                          %label
+                            Basic / Graduation
+                          = select_tag :grad_deg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ])
+                          .row
+                            .col-md-12
+                              %label
+                                Full Time
+                              =radio_button_tag :grad_time,'full time'
+                              %label
+                                Part Time
+                              =radio_button_tag :grad_time, 'part time'
+                              %label
+                                Correspondence / Distance Learning
+                              =radio_button_tag :grad_time,'correspondence/distance learning'
+                          .row
+                            .col-lg-3
+                            .col-lg-6
+                              %label
+                                Specialization
+                              =select_tag :grad_subj, options_for_select(['option1', 'option2', 'option3'])
+                          .row
+                            .col-lg-3
+                            .col-lg-6
+                              %label
+                                Year
+                              = select_year(Date.today.year, start_year:2000, end_year:2020, field_name:'grad')
+                          .row
+                            .col-lg-3
+                            .col-lg-6
+                              %label
+                                University / Institute
+                              = select_tag :grad_clg, options_for_select(["Select",1])
+                          =submit_tag 'Submit', id: 'grad_submit'
+                    
+              .panel.panel-default
+                .panel-heading
+                  %h4.panel-title
+                    %a.accordion-toggle{"data-parent" => "#accordion-1", "data-toggle" => "collapse", href: "#collapse-Two"}
+                      Post Graduation
+                #collapse-Two.panel-collapse.collapse
+                  .panel-body
+                    .row
+                      .col-md-8
+                        = form_tag postgrad_edu_create_path, method: :post do 
+                          =hidden_field_tag :postgrad_deg_type, value: 'post graduation'
+                          %label
+                            Basic / Graduation
+                          = select_tag :postgrad_deg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ])
+                          %label
+                          .row
+                            .col-lg-12
+                              %label
+                                Full Time
+                              =radio_button_tag :postgrad_time,'full time'
+                          %label
+                            Part Time
+                          =radio_button_tag :postgrad_time, 'part time'
+                          %label
+                            Correspondence / Distance Learning
+                          =radio_button_tag :postgrad_time,'correspondence/distance learning'
+                          .row
+                            .col-lg-3
+                            .col-lg-6
+                              %label
+                                Specialization
+                              =select_tag :postgrad_subj, options_for_select(['option1', 'option2', 'option3'])
+                          .row
+                            .col-lg-3
+                            .col-lg-6
+                              %label
+                                Year
+                              = select_year(Date.today.year, start_year:2000, end_year:2020, field_name:'postgrad')
+                          .row
+                            .col-lg-3
+                            .col-lg-6
+                              %label
+                                University / Institute
+                              = select_tag :postgrad_clg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ])
+                          =submit_tag 'Submit'
+          
+    / End Content
+/ /container
+/ === End Content Part ===
+:javascript
+  jQuery(document).ready(function() {
+      App.init();
+  });
+  $(document).ready(function(){
+    $('#current_upd').click(function(){
+      if($('#form_cur_ad').css('display')=="none")
+      $('#form_cur_ad').show();
+      else
+      $('#form_cur_ad').hide();
+    });
+
+    $('#perm_upd').click(function(){
+      if($('#form_perm_ad').css('display')=="none")
+      $('#form_perm_ad').show();
+      else
+      $('#form_perm_ad').hide();
+    });
+    $('#enter_perm').click(function(){
+      if($('#form_perm_ad').css('display')=="none")
+      $('#form_perm_ad').show();
+      else
+      $('#form_perm_ad').hide();
+    });                
+  });
+
+
+
+
+/[if lt IE 9]
+  <script src="assets/plugins/respond.js"></script>
