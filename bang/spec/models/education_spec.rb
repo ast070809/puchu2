@@ -17,5 +17,9 @@
 require 'spec_helper'
 
 describe Education do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should respond_to :degree}
+  it { should respond_to :deg_type}
+  it { should respond_to :subject}
+  it { should respond_to :college_id}
+  it { should respond_to :year}
 end

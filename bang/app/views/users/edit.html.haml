@@ -1,4 +1,4 @@
-
+-provide(:title, 'Edit')
 .breadcrumbs.margin-bottom-40
   .container
     %h1.pull-left
@@ -21,7 +21,7 @@
               %i.icon-cloud
               Education
           %li
-            %a{"data-toggle" => "tab", href: "#messages-2"}
+            %a{"data-toggle" => "tab", href: "#availability"}
               %i.icon-comments
               Availability
           %li
@@ -70,32 +70,21 @@
                           %span.badge.badge-blue.click_pointer{id: 'current_upd'}
                             Update
                         -else
-                          %button.btn-u.btn-u-blue.btn-xs
+                          %button.btn-u.btn-u-blue.btn-xs{id: 'enter_cur'}
                             Enter Current Address
                     %tr{id: "form_cur_ad", style: "display: none;"}
                       %td
                       %td
-                        %table
-                          =form_for @current_address do |f|
-                            %tr
-                              %td
-                                =f.label :street_address
-                                =f.text_area :street_address
-                            %tr
-                              %td
-                                =f.label :city
-                                =f.text_field :city
-                            %tr
-                              %td
-                                =f.label :state
-                                =f.text_field :state
-                            %tr
-                              %td
-                                =f.label :pincode
-                                =f.text_field :pincode
-                            %tr
-                              %td
-                                =f.submit 'Submit'
+                        =form_for @current_address do |f|
+                          =f.label :street_address
+                          =f.text_area :street_address
+                          =f.label :city
+                          =f.text_field :city
+                          =f.label :state
+                          =f.text_field :state
+                          =f.label :pincode
+                          =f.text_field :pincode
+                          =f.submit 'Submit'
                     %tr
                       %td
                         Permanent Address
@@ -124,27 +113,16 @@
                     %tr{id: 'form_perm_ad', style:"display:none;"}
                       %td
                       %td
-                        %table
-                          =form_for @permanent_address do |f|
-                            %tr
-                              %td
-                                =f.label :street_address
-                                =f.text_area :street_address
-                            %tr
-                              %td
-                                =f.label :city
-                                =f.text_field :city
-                            %tr
-                              %td
-                                =f.label :state
-                                =f.text_field :state
-                            %tr
-                              %td
-                                =f.label :pincode
-                                =f.text_field :pincode
-                            %tr
-                              %td
-                                =f.submit 'Submit'
+                        =form_for @permanent_address do |f|
+                          =f.label :street_address
+                          =f.text_area :street_address
+                          =f.label :city
+                          =f.text_field :city
+                          =f.label :state
+                          =f.text_field :state
+                          =f.label :pincode
+                          =f.text_field :pincode
+                          =f.submit 'Submit'
           .tab-pane{id: 'edu'}
             #accordion-1.panel-group.acc-v1
               .panel.panel-default
@@ -239,10 +217,17 @@
                                 University / Institute
                               = select_tag :postgrad_clg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ])
                           =submit_tag 'Submit'
+
           
     / End Content
 / /container
 / === End Content Part ===
+/ JS Global Compulsory
+%script{src: "assets/plugins/jquery-migrate-1.2.1.min.js", type: "text/javascript"}
+%script{src: "assets/plugins/bootstrap/js/bootstrap.min.js", type: "text/javascript"}
+%script{src: "assets/plugins/hover-dropdown.min.js", type: "text/javascript"}
+%script{src: "assets/plugins/back-to-top.js", type: "text/javascript"}
+
 :javascript
   jQuery(document).ready(function() {
       App.init();
@@ -266,11 +251,14 @@
       $('#form_perm_ad').show();
       else
       $('#form_perm_ad').hide();
-    });                
+    });
+    $('#enter_cur').click(function(){
+      if($('#form_cur_ad').css('display')=="none")
+      $('#form_cur_ad').show();
+      else
+      $('#form_cur_ad').hide();
+    });             
   });
-
-
-
 
 /[if lt IE 9]
   <script src="assets/plugins/respond.js"></script>

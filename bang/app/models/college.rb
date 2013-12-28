@@ -10,7 +10,8 @@
 #
 
 class College < ActiveRecord::Base
-
+	validates :name, presence: true
+	
 	has_many :educations
 	belongs_to :locations
 end

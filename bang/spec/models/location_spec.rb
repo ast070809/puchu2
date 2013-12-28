@@ -12,5 +12,6 @@
 require 'spec_helper'
 
 describe Location do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it{should respond_to :city}
+  it { should respond_to :state}
 end

@@ -15,5 +15,8 @@
 require 'spec_helper'
 
 describe CurrentAddress do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should respond_to :street_address}
+  it { should respond_to :city}
+  it { should respond_to :state}
+  it { should respond_to :pincode}
 end

@@ -1,0 +1,2 @@
+module PermanentAddressesHelper
+end
