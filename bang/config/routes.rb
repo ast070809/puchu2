@@ -3,6 +3,7 @@ Bang::Application.routes.draw do
   resources :users
   resources :current_addresses
   resources :permanent_addresses
+  resources :educations
 
   root  to: 'static_pages#landing'
 

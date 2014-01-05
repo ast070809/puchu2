@@ -33,5 +33,5 @@ class User < ActiveRecord::Base
   
   has_one :current_address
   has_one :permanent_address
-
+  has_many :educations
 end

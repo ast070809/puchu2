@@ -2,7 +2,7 @@
 .breadcrumbs.margin-bottom-40
   .container
     %h1.pull-left
-      Edit
+      Edit Profile
 .container
   .row
     / Begin Sidebar Menu
@@ -46,6 +46,11 @@
                         =current_user.first_name
                     %tr
                       %td
+                        Last Name
+                      %td
+                        =current_user.last_name
+                    %tr
+                      %td
                         Registered Email
                       %td
                         =current_user.email
@@ -75,16 +80,30 @@
                     %tr{id: "form_cur_ad", style: "display: none;"}
                       %td
                       %td
-                        =form_for @current_address do |f|
-                          =f.label :street_address
-                          =f.text_area :street_address
-                          =f.label :city
-                          =f.text_field :city
-                          =f.label :state
-                          =f.text_field :state
-                          =f.label :pincode
-                          =f.text_field :pincode
-                          =f.submit 'Submit'
+                        =form_for @current_address, html: {class: 'form-horizontal', role: 'form'} do |f|
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :street_address
+                            .col-lg-10
+                              =f.text_area :street_address, type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :city
+                            .col-lg-10
+                              =f.text_field :city,type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :state
+                            .col-lg-10
+                              =f.text_field :state,type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :pincode
+                            .col-lg-10
+                              =f.text_field :pincode,type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.submit 'Submit', class: "btn-u btn-u-green"
                     %tr
                       %td
                         Permanent Address
@@ -113,16 +132,30 @@
                     %tr{id: 'form_perm_ad', style:"display:none;"}
                       %td
                       %td
-                        =form_for @permanent_address do |f|
-                          =f.label :street_address
-                          =f.text_area :street_address
-                          =f.label :city
-                          =f.text_field :city
-                          =f.label :state
-                          =f.text_field :state
-                          =f.label :pincode
-                          =f.text_field :pincode
-                          =f.submit 'Submit'
+                        =form_for @permanent_address,html: {class: 'form-horizontal', role: 'form'} do |f|
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :street_address
+                            .col-lg-10
+                              =f.text_area :street_address, type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :city
+                            .col-lg-10
+                              =f.text_field :city,type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :state
+                            .col-lg-10
+                              =f.text_field :state,type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :pincode
+                            .col-lg-10
+                              =f.text_field :pincode,type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.submit 'Submit', class: "btn-u btn-u-green"
           .tab-pane{id: 'edu'}
             #accordion-1.panel-group.acc-v1
               .panel.panel-default
@@ -134,43 +167,47 @@
                   .panel-body
                     .row
                       .col-md-12
-                        session chk
-                        =session[:chk]
-                        = form_tag grad_edu_create_path, method: :post do
+                        = form_tag grad_edu_create_path, method: :post , class: 'form-horizontal'do
                           = hidden_field_tag :grad_deg_type, value: 'graduation'
-                          %label
-                            Basic / Graduation
-                          = select_tag :grad_deg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ])
-                          .row
-                            .col-md-12
-                              %label
+                          .form-group
+                            .col-lg-2.control-label
+                              Basic / Graduation
+                            .col-lg-10
+                              = select_tag :grad_deg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ]), class: 'form-control'
+                          .form-group
+                            .col-lg-2
+                            .col-lg-2
+                              .radio
+                                =radio_button_tag :grad_time,'full time'
                                 Full Time
-                              =radio_button_tag :grad_time,'full time'
-                              %label
+                            .col-lg-2  
+                              .radio
+                                =radio_button_tag :grad_time, 'part time'
                                 Part Time
-                              =radio_button_tag :grad_time, 'part time'
-                              %label
+                            .col-lg-6
+                              .radio
                                 Correspondence / Distance Learning
-                              =radio_button_tag :grad_time,'correspondence/distance learning'
-                          .row
-                            .col-lg-3
-                            .col-lg-6
-                              %label
-                                Specialization
-                              =select_tag :grad_subj, options_for_select(['option1', 'option2', 'option3'])
-                          .row
-                            .col-lg-3
-                            .col-lg-6
-                              %label
-                                Year
-                              = select_year(Date.today.year, start_year:2000, end_year:2020, field_name:'grad')
-                          .row
-                            .col-lg-3
-                            .col-lg-6
-                              %label
-                                University / Institute
-                              = select_tag :grad_clg, options_for_select(["Select",1])
-                          =submit_tag 'Submit', id: 'grad_submit'
+                                =radio_button_tag :grad_time,'correspondence/distance learning'
+                          .form-group
+                            .col-lg-2.control-label
+                              Specialization
+                            -grouped_options = {'North America' => [['United States','US'], 'Canada'],'Europe' => ['Denmark','Germany','France']}
+                            .col-lg-10
+                              =select_tag :grad_subj, grouped_options_for_select(grouped_options), class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              Year
+                            .col-lg-4
+                              = select_year(Date.today.year, {start_year:2000, end_year:2020, field_name:'grad'},{class: 'form-control'} )
+                          .form-group
+                            .col-lg-2.control-label
+                              University / Institute
+                            .col-lg-10
+                              = select_tag :grad_clg, options_for_select(["Select",1]), class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =submit_tag 'Submit', id: 'grad_submit', class: 'btn-u btn-u-green'
+
                     
               .panel.panel-default
                 .panel-heading
@@ -180,54 +217,53 @@
                 #collapse-Two.panel-collapse.collapse
                   .panel-body
                     .row
-                      .col-md-8
-                        = form_tag postgrad_edu_create_path, method: :post do 
-                          =hidden_field_tag :postgrad_deg_type, value: 'post graduation'
-                          %label
-                            Basic / Graduation
-                          = select_tag :postgrad_deg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ])
-                          %label
-                          .row
-                            .col-lg-12
-                              %label
+                      .col-md-12
+                        = form_tag postgrad_edu_create_path, method: :post , class: 'form-horizontal'do 
+                          =hidden_field_tag :postgrad_deg_type, value: 'post_graduation'
+                          .form-group
+                            .col-lg-2.control-label
+                              Post Graduation
+                            .col-lg-10
+                              = select_tag :postgrad_deg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ]), class: 'form-control'
+                          .form-group
+                            .col-lg-2
+                            .col-lg-2
+                              .radio
+                                =radio_button_tag :postgrad_time,'full time'
                                 Full Time
-                              =radio_button_tag :postgrad_time,'full time'
-                          %label
-                            Part Time
-                          =radio_button_tag :postgrad_time, 'part time'
-                          %label
-                            Correspondence / Distance Learning
-                          =radio_button_tag :postgrad_time,'correspondence/distance learning'
-                          .row
-                            .col-lg-3
+                            .col-lg-2  
+                              .radio
+                                =radio_button_tag :postgrad_time, 'part time'
+                                Part Time
+                            .col-lg-6  
+                              .radio
+                                =radio_button_tag :postgrad_time,'correspondence/distance learning'
+                                Correspondence / Distance Learning
+                          .form-group
+                            .col-lg-2.control-label
+                              Specialization
+                            .col-lg-10
+                              =select_tag :postgrad_subj, options_for_select(['option1', 'option2', 'option3']), class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              Year
                             .col-lg-6
-                              %label
-                                Specialization
-                              =select_tag :postgrad_subj, options_for_select(['option1', 'option2', 'option3'])
-                          .row
-                            .col-lg-3
-                            .col-lg-6
-                              %label
-                                Year
-                              = select_year(Date.today.year, start_year:2000, end_year:2020, field_name:'postgrad')
-                          .row
-                            .col-lg-3
-                            .col-lg-6
-                              %label
-                                University / Institute
-                              = select_tag :postgrad_clg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ])
-                          =submit_tag 'Submit'
+                              = select_year(Date.today.year, {start_year:2000, end_year:2020, field_name:'postgrad'},{class: 'form-control'}) 
+                          .form-group
+                            .col-lg-2.control-label
+                              University / Institute
+                            .col-lg-10
+                              = select_tag :postgrad_clg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ]), class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =submit_tag 'Submit', id: 'grad_submit', class: 'btn-u btn-u-green'
+                          
 
           
     / End Content
 / /container
 / === End Content Part ===
-/ JS Global Compulsory
-%script{src: "assets/plugins/jquery-migrate-1.2.1.min.js", type: "text/javascript"}
-%script{src: "assets/plugins/bootstrap/js/bootstrap.min.js", type: "text/javascript"}
-%script{src: "assets/plugins/hover-dropdown.min.js", type: "text/javascript"}
-%script{src: "assets/plugins/back-to-top.js", type: "text/javascript"}
-
+=javascript_include_tag('unify/app.js')
 :javascript
   jQuery(document).ready(function() {
       App.init();

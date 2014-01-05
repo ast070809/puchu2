@@ -19,6 +19,20 @@ class UsersController < ApplicationController
 	    else
 	      @permanent_address = @p
 	    end
+
+	    @g = current_user.educations.where(deg_type: 'graduation')
+	    if @g.nil?
+	    	@grad_edu = current_user.educations.build(deg_type: 'graduation')
+	    else
+	    	@grad_edu = @g
+	    end
+	    
+	    @pg = current_user.educations.where(deg_type: 'post_graduation')
+	    if @pg.nil?
+	    	@postgrad_edu = current_user.educations.build
+	    else
+	    	@postgrad_edu = @pg
+	    end
 	end
 
 

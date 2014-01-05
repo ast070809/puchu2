@@ -1,3 +1,4 @@
+=stylesheet_link_tag('unify/page_log_reg_v1.css')
 -provide(:title, 'Login')
 / /header
 / === End Header ===
@@ -5,12 +6,6 @@
 .breadcrumbs.margin-bottom-40
   .container
     %h1.pull-left Login
-    %ul.pull-right.breadcrumb
-      %li
-        %a{href: "index.html"} Home
-      %li
-        %a{href: ""} Pages
-      %li.active Login
   / /container
 / /breadcrumbs
 / === End Breadcrumbs ===
@@ -18,11 +13,10 @@
 .container
   .row
     .col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3
-      %h2 Sign in
-      
+  
       = form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "reg-page"}) do |f|
         .reg-header
-          %h2 Login to your account  
+          %h2 Sign in to your account
         .input-group.margin-bottom-20
           %span.input-group-addon
             %i.icon-user
