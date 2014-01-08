@@ -1,29 +1,28 @@
 class EducationsController < ApplicationController
 
-	def grad_edu_create
-		user = current_user
-		edu = user.educations.new(deg_type:'graduation', degree: params[:grad_deg], deg_time: params[:grad_time],
-			subject: params[:grad_subj], year: params[:date]["grad"], college_id: 'grad_clg')
-		if edu.save!
-			flash[:success] = 'Graduation details saved successfully'
+	def create
+		edu = current_user.educations.new(educations_params)
+		if edu.save
+			flash[:success] = 'Details saved successfully'
 		else
 			flash[:error] = 'Some error occured'
 		end
-		
 		redirect_to edit_user_path(current_user.id)
 	end
 
-	def postgrad_edu_create
-		user = current_user
-		edu = user.educations.new(deg_type:'post_graduation', degree: params[:postgrad_deg], deg_time: params[:postgrad_time],
-			subject: params[:postgrad_subj], year: params[:date]["postgrad"], college_id: 'postgrad_clg')
-		if edu.save!
-			flash[:success] = 'Post Graduation details saved successfully'
+	def update
+		edu = current_user.educations.find_by(deg_type: params[:education]['deg_type'])
+		if edu.update(educations_params)
+			flash[:success] = 'Details updated successfully'
 		else
 			flash[:error] = 'Some error occured'
 		end
-		
 		redirect_to edit_user_path(current_user.id)
 	end
+
+	private
+	  	def educations_params
+	  		params.require(:education).permit(:deg_type, :deg_time, :year, :subject, :college_id, :degree)
+	  	end
 
 end

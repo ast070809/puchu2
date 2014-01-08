@@ -4,11 +4,12 @@ Bang::Application.routes.draw do
   resources :current_addresses
   resources :permanent_addresses
   resources :educations
+  resources :availabilities
 
   root  to: 'static_pages#landing'
 
-  post 'grad_edu_create' => 'educations#grad_edu_create'
-  post 'postgrad_edu_create' => 'educations#postgrad_edu_create'
+  delete 'delete_availability' => 'availabilities#delete_availability'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

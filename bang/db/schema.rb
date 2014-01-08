@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131227204304) do
+ActiveRecord::Schema.define(version: 20140108182155) do
+
+  create_table "availabilities", force: true do |t|
+    t.date     "from"
+    t.date     "to"
+    t.string   "interest"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "city"
+    t.string   "region"
+  end
 
   create_table "colleges", force: true do |t|
     t.string   "name"
@@ -74,6 +85,9 @@ ActiveRecord::Schema.define(version: 20131227204304) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.date     "dob"
+    t.string   "gender"
+    t.string   "ph"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

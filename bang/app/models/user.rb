@@ -17,6 +17,9 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string(255)
 #  last_sign_in_ip        :string(255)
+#  dob                    :date
+#  gender                 :string(255)
+#  ph                     :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -34,4 +37,5 @@ class User < ActiveRecord::Base
   has_one :current_address
   has_one :permanent_address
   has_many :educations
+  has_many :availabilities
 end

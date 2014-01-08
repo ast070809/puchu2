@@ -23,11 +23,7 @@
           %li
             %a{"data-toggle" => "tab", href: "#availability"}
               %i.icon-comments
-              Availability
-          %li
-            %a{"data-toggle" => "tab", href: "#settings-2"}
-              %i.icon-gear
-              Settings
+              Availability and Interest
       .col-md-9
         .tab-content
           .tab-pane.active{id:'basic_info'}
@@ -51,9 +47,49 @@
                         =current_user.last_name
                     %tr
                       %td
+                        Gender
+                      %td
+                        =current_user.gender
+                    %tr
+                      %td
+                        Date of Birth
+                      %td
+                        =current_user.dob
+                    %tr
+                      %td
+                        Contact Number
+                      %td
+                        =current_user.ph
+                    %tr
+                      %td
                         Registered Email
                       %td
-                        =current_user.email
+                        %strong 
+                          =current_user.email
+                    %tr
+                      %td
+                      %td
+                        %span.badge.badge-blue.click_pointer{id: 'basicinfo_upd'}
+                          Update 
+                    %tr{id: "form_basic", style: "display: none;"}
+                      %td
+                      %td
+                        = form_for @user do |f|
+                          =f.label :first_name
+                          =f.text_field :first_name, type: 'text'
+                          =f.label :last_name
+                          =f.text_field :last_name, type: 'text'
+                          =f.label 'Date of Birth'
+                          =f.date_select :dob, star_year:1980, :prompt => { :day => 'Day', :month => 'Month', :year => 'Year' }, order: [:day, :month, :year], class: 'form-control'
+                          %br
+                          =f.label 'Gender'
+                          =f.select :gender ,options_for_select(['Male', 'Female'])
+                          =f.label 'Contact Number'
+                          =f.text_field :ph, type: 'text'
+
+                          %br
+                          =f.submit
+                          
                     %tr
                       %td
                         Current Address
@@ -167,47 +203,47 @@
                   .panel-body
                     .row
                       .col-md-12
-                        = form_tag grad_edu_create_path, method: :post , class: 'form-horizontal'do
-                          = hidden_field_tag :grad_deg_type, value: 'graduation'
+                        =form_for @gedu, html: {class: 'form-horizontal'}do |f|
+                          =f.hidden_field :deg_type, value: 'graduation'
                           .form-group
                             .col-lg-2.control-label
                               Basic / Graduation
                             .col-lg-10
-                              = select_tag :grad_deg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ]), class: 'form-control'
+                              =f.select :degree, ["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS"], {}, {class: 'form-horizontal'}
                           .form-group
                             .col-lg-2
                             .col-lg-2
                               .radio
-                                =radio_button_tag :grad_time,'full time'
+                                =f.radio_button :deg_time,'full time'
                                 Full Time
                             .col-lg-2  
                               .radio
-                                =radio_button_tag :grad_time, 'part time'
+                                =f.radio_button :deg_time, 'part time'
                                 Part Time
                             .col-lg-6
                               .radio
+                                =f.radio_button :deg_time,'correspondence/distance learning'
                                 Correspondence / Distance Learning
-                                =radio_button_tag :grad_time,'correspondence/distance learning'
                           .form-group
                             .col-lg-2.control-label
                               Specialization
                             -grouped_options = {'North America' => [['United States','US'], 'Canada'],'Europe' => ['Denmark','Germany','France']}
                             .col-lg-10
-                              =select_tag :grad_subj, grouped_options_for_select(grouped_options), class: 'form-control'
+                              =f.select :subject, grouped_options_for_select(grouped_options), class: 'form-control'
                           .form-group
                             .col-lg-2.control-label
                               Year
                             .col-lg-4
-                              = select_year(Date.today.year, {start_year:2000, end_year:2020, field_name:'grad'},{class: 'form-control'} )
+                              = f.select :year, (Time.zone.now.year - 10)..(Time.zone.now.year + 10),class: 'form-control'
                           .form-group
                             .col-lg-2.control-label
                               University / Institute
                             .col-lg-10
-                              = select_tag :grad_clg, options_for_select(["Select",1]), class: 'form-control'
+                              = f.select :college_id, options_for_select(["Select",1]), class: 'form-control'
                           .form-group
                             .col-lg-2.control-label
-                              =submit_tag 'Submit', id: 'grad_submit', class: 'btn-u btn-u-green'
-
+                              =f.submit 'Submit', id: 'grad_submit', class: 'btn-u btn-u-green'
+                        
                     
               .panel.panel-default
                 .panel-heading
@@ -218,45 +254,99 @@
                   .panel-body
                     .row
                       .col-md-12
-                        = form_tag postgrad_edu_create_path, method: :post , class: 'form-horizontal'do 
-                          =hidden_field_tag :postgrad_deg_type, value: 'post_graduation'
+                        =form_for @pgedu, html: {class: 'form-horizontal'}do |f|
+                          =f.hidden_field :deg_type, value: 'post_graduation'
                           .form-group
                             .col-lg-2.control-label
                               Post Graduation
                             .col-lg-10
-                              = select_tag :postgrad_deg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ]), class: 'form-control'
+                              =f.select :degree, ["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS"], {}, {class: 'form-horizontal'}
                           .form-group
                             .col-lg-2
                             .col-lg-2
                               .radio
-                                =radio_button_tag :postgrad_time,'full time'
+                                =f.radio_button :deg_time,'full time'
                                 Full Time
                             .col-lg-2  
                               .radio
-                                =radio_button_tag :postgrad_time, 'part time'
+                                =f.radio_button :deg_time, 'part time'
                                 Part Time
-                            .col-lg-6  
+                            .col-lg-6
                               .radio
-                                =radio_button_tag :postgrad_time,'correspondence/distance learning'
+                                =f.radio_button :deg_time,'correspondence/distance learning'
                                 Correspondence / Distance Learning
                           .form-group
                             .col-lg-2.control-label
                               Specialization
+                            -grouped_options = {'North America' => [['United States','US'], 'Canada'],'Europe' => ['Denmark','Germany','France']}
                             .col-lg-10
-                              =select_tag :postgrad_subj, options_for_select(['option1', 'option2', 'option3']), class: 'form-control'
+                              =f.select :subject, grouped_options_for_select(grouped_options), class: 'form-control'
                           .form-group
                             .col-lg-2.control-label
                               Year
-                            .col-lg-6
-                              = select_year(Date.today.year, {start_year:2000, end_year:2020, field_name:'postgrad'},{class: 'form-control'}) 
+                            .col-lg-4
+                              = f.select :year, (Time.zone.now.year - 10)..(Time.zone.now.year + 10),class: 'form-control'
                           .form-group
                             .col-lg-2.control-label
                               University / Institute
                             .col-lg-10
-                              = select_tag :postgrad_clg, options_for_select(["Select", "Not pursuing Graduation", "B.A", "B.Arch", "BCA", "B.B.A", "B.Com", "B.Ed", "BDS", "BHM", "B.Pharma", "B.Sc", "B.Tech/B.E.", "LLB", "MBBS",  ]), class: 'form-control'
+                              = f.select :college_id, options_for_select(["Select",1]), class: 'form-control'
                           .form-group
                             .col-lg-2.control-label
-                              =submit_tag 'Submit', id: 'grad_submit', class: 'btn-u btn-u-green'
+                              =f.submit 'Submit', id: 'grad_submit', class: 'btn-u btn-u-green'
+          .tab-pane{id: 'availability'}
+            -if !@av_all.empty?
+              %table.table
+                %thead
+                  %td
+                    From
+                  %td
+                    To
+                  %td
+                    Interest
+                  %td
+                    Region
+                  %td
+                    City
+                  %td
+                %tbody
+                  -@av_all.each do |a|
+                    %tr
+                      %td
+                        =a.from
+                      %td
+                        =a.to
+                      %td
+                        =a.interest
+                      %td
+                        =a.region
+                      %td
+                        =a.city
+                      %td
+                        =link_to 'Delete', delete_availability_path(id: a.id), method: :delete
+            %button.btn-u.btn-green
+              Add availability
+            #av_form
+              =form_for @av do |f|
+                =f.label :from
+                =f.date_select :from
+                %br
+                =f.label :to
+                =f.date_select :to
+                %br
+                =f.label :interest
+
+                =f.select :interest, options_for_select(['1', '2'])
+                %br
+                =f.label "Region within the city"
+                =f.text_field :region
+                %br
+                =f.label :city
+                =f.select :city, options_for_select(['city1', 'city2'])
+
+                =f.submit
+            
+            
                           
 
           
@@ -294,6 +384,13 @@
       else
       $('#form_cur_ad').hide();
     });             
+
+    $('#basicinfo_upd').click(function(){
+      if($('#form_basic').css('display')=="none")
+      $('#form_basic').show();
+      else
+      $('#form_basic').hide();
+    });
   });
 
 /[if lt IE 9]

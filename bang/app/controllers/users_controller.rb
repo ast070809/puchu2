@@ -8,32 +8,56 @@ class UsersController < ApplicationController
 		@c = current_user.current_address
 	    @p = current_user.permanent_address
 	    
+	    #######Current Address#######
 	    if @c.nil?
 	      @current_address = current_user.build_current_address
 	    else
 	      @current_address = @c
 	    end
 
+	    #####Permanent Address######
 	    if @p.nil?
 	      @permanent_address = current_user.build_permanent_address
 	    else
 	      @permanent_address = @p
 	    end
 
-	    @g = current_user.educations.where(deg_type: 'graduation')
+	    #####Graduation details#######
+	    @g = current_user.educations.find_by(deg_type: 'graduation')
 	    if @g.nil?
-	    	@grad_edu = current_user.educations.build(deg_type: 'graduation')
+	    	@gedu = current_user.educations.build
 	    else
-	    	@grad_edu = @g
+	    	@gedu = @g
 	    end
 	    
-	    @pg = current_user.educations.where(deg_type: 'post_graduation')
+	    #####Post Graduation details#######
+	    @pg = current_user.educations.find_by(deg_type: 'post_graduation')
 	    if @pg.nil?
-	    	@postgrad_edu = current_user.educations.build
+	    	@pgedu = current_user.educations.build
 	    else
-	    	@postgrad_edu = @pg
+	    	@pgedu = @pg
 	    end
+ 
+	    ##### Availability details ########
+	    @av_all = current_user.availabilities.to_a
+
+	    @av = current_user.availabilities.new
+	    
 	end
 
+	def update
+		@user = User.find(params[:id])
+		if @user.update(users_params)
+			flash[:success] = 'Details updated successfully'
+		else
+			flash[:error] = 'Some error occured'
+		end
+		redirect_to edit_user_path(current_user.id)
+	end
+
+	private
+	  	def users_params
+	  		params.require(:user).permit(:first_name, :last_name, :dob, :gender)
+	  	end
 
 end
