@@ -74,21 +74,34 @@
                     %tr{id: "form_basic", style: "display: none;"}
                       %td
                       %td
-                        = form_for @user do |f|
-                          =f.label :first_name
-                          =f.text_field :first_name, type: 'text'
-                          =f.label :last_name
-                          =f.text_field :last_name, type: 'text'
-                          =f.label 'Date of Birth'
-                          =f.date_select :dob, star_year:1980, :prompt => { :day => 'Day', :month => 'Month', :year => 'Year' }, order: [:day, :month, :year], class: 'form-control'
-                          %br
-                          =f.label 'Gender'
-                          =f.select :gender ,options_for_select(['Male', 'Female'])
-                          =f.label 'Contact Number'
-                          =f.text_field :ph, type: 'text'
-
-                          %br
-                          =f.submit
+                        = form_for @user, html: {class: 'form-horizontal', role: 'form'} do |f|
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :first_name
+                            .col-lg-10
+                              =f.text_field :first_name, type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label :last_name
+                            .col-lg-10
+                              =f.text_field :last_name, type: 'text', class: 'form-control'
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label 'Date of Birth'
+                            .col-lg-10
+                              =f.date_select :dob, star_year:1980, :prompt => { :day => 'Day', :month => 'Month', :year => 'Year' }, order: [:day, :month, :year]
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label 'Gender'
+                            .col-lg-10
+                              =f.select :gender ,options_for_select(['Male', 'Female']), html:{class: 'form-control'}
+                          .form-group
+                            .col-lg-2.control-label
+                              =f.label 'Contact Number'
+                            .col-lg-10
+                              =f.text_field :ph, type: 'text', class: 'form-control'
+                          .form-group
+                            =f.submit 'Update', class: 'btn-u btn-u-green'
                           
                     %tr
                       %td
@@ -299,15 +312,15 @@
               %table.table
                 %thead
                   %td
-                    From
+                    %strong From
                   %td
-                    To
+                    %strong To
                   %td
-                    Interest
+                    %strong Interest
                   %td
-                    Region
+                    %strong Region
                   %td
-                    City
+                    %strong City
                   %td
                 %tbody
                   -@av_all.each do |a|
@@ -323,31 +336,45 @@
                       %td
                         =a.city
                       %td
-                        =link_to 'Delete', delete_availability_path(id: a.id), method: :delete
-            %button.btn-u.btn-green
-              Add availability
-            #av_form
-              =form_for @av do |f|
-                =f.label :from
-                =f.date_select :from
-                %br
-                =f.label :to
-                =f.date_select :to
-                %br
-                =f.label :interest
-
-                =f.select :interest, options_for_select(['1', '2'])
-                %br
-                =f.label "Region within the city"
-                =f.text_field :region
-                %br
-                =f.label :city
-                =f.select :city, options_for_select(['city1', 'city2'])
-
-                =f.submit
-            
-            
-                          
+                        =link_to 'Delete', delete_availability_path(id: a.id), method: :delete, class: 'color-green'
+            .panel.panel-blue.margin-bottom-40
+              .panel-heading.margin-bottom-20
+                .panel-title
+                  Add new availability
+              .panel-body
+                #av_form
+                  =form_for @av , html: {class: 'form-horizontal'} do |f|
+                    .form-group
+                      .col-lg-3.control-label
+                        =f.label :from
+                      .col-lg-9
+                        =f.date_select :from
+                    .form-group
+                      .col-lg-3.control-label
+                        =f.label :to
+                      .col-lg-9
+                        =f.date_select :to
+                    .form-group
+                      .col-lg-3.control-label
+                        =f.label :interest
+                      .col-lg-9
+                        =f.select :interest, options_for_select(['1', '2'])
+                    .form-group
+                      .col-lg-3.control-label
+                        =f.label :city
+                      .col-lg-9
+                        =f.select :city, options_for_select(['city1', 'city2'])
+                    .form-group
+                      .col-lg-3.control-label
+                        =f.label "Region within the city"
+                      .col-lg-9
+                        =f.text_field :region
+                    .form-group
+                      .col-lg-9.col-lg-offset-3
+                        =f.submit "Add Availability", class: 'btn-u btn-u-green'
+                
+              
+                            
 
           
     / End Content

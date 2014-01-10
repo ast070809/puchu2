@@ -12,7 +12,7 @@
           %h2 Register a new account
           %p
             Already Signed Up? Click
-            %a.color-green{href: "page_login.html"} Sign In
+            =link_to('Sign In', new_user_session_path, class: 'color-green')
             to login your account.
         = devise_error_messages!
         .row

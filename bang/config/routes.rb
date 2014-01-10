@@ -10,6 +10,7 @@ Bang::Application.routes.draw do
 
   delete 'delete_availability' => 'availabilities#delete_availability'
   
+  match '/opportunities', to: 'static_pages#opportunities', via: 'get'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
